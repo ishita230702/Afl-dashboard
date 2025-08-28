@@ -2,6 +2,13 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { handleDemo } from "./routes/demo";
+import {
+  initiateGoogleAuth,
+  handleGoogleCallback,
+  initiateAppleAuth,
+  handleAppleCallback,
+  verifyToken,
+} from "./routes/oauth";
 
 export function createServer() {
   const app = express();
@@ -18,6 +25,13 @@ export function createServer() {
   });
 
   app.get("/api/demo", handleDemo);
+
+  // OAuth routes
+  app.get("/api/auth/google", initiateGoogleAuth);
+  app.get("/api/auth/google/callback", handleGoogleCallback);
+  app.get("/api/auth/apple", initiateAppleAuth);
+  app.post("/api/auth/apple/callback", handleAppleCallback);
+  app.post("/api/auth/verify-token", verifyToken);
 
   return app;
 }
