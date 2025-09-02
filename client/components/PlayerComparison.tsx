@@ -58,6 +58,11 @@ interface AFLPlayer {
   weight: string;
   stats: PlayerStats;
   form: number[];
+  heatMap?: Array<{
+    zone: string;
+    touches: number;
+    effectiveness: number;
+  }>;
 }
 
 interface PlayerComparisonProps {
