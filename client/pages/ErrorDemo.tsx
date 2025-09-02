@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import MobileNavigation from "@/components/MobileNavigation";
-import ErrorPage, {
+import Error, {
   NetworkError,
   ServerError,
   UnauthorizedError,
@@ -94,7 +94,7 @@ export default function ErrorDemo() {
         return <ForbiddenError onRetry={() => setCurrentDemo(null)} />;
       case "general":
         return (
-          <ErrorPage
+          <Error
             title="General Error Demo"
             message="This is a demonstration of a general error page."
             onRetry={() => setCurrentDemo(null)}
