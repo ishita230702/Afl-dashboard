@@ -647,7 +647,7 @@ export default function AFLDashboard() {
               };
             }
 
-            if (item.status === "queued" && Math.random() > 0.7) {
+            if ((item.status as string) === "queued" && Math.random() > 0.7) {
               newStatus = "processing";
               newStage = "preprocessing";
               return {
