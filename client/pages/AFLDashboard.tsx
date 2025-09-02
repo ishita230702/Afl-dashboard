@@ -1546,10 +1546,12 @@ Export ID: ${Date.now()}-${Math.random().toString(36).substr(2, 9)}
               <BarChart3 className="w-4 h-4" />
               Player Performance
             </TabsTrigger>
-            <TabsTrigger value="match" className="flex items-center gap-2">
-              <Activity className="w-4 h-4" />
-              Live Match
-            </TabsTrigger>
+            {ENABLE_LIVE_FEATURES && (
+              <TabsTrigger value="match" className="flex items-center gap-2">
+                <Activity className="w-4 h-4" />
+                Live Match
+              </TabsTrigger>
+            )}
             <TabsTrigger value="crowd" className="flex items-center gap-2">
               <Users className="w-4 h-4" />
               Crowd Monitor
