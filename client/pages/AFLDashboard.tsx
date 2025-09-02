@@ -634,7 +634,7 @@ export default function AFLDashboard() {
 
             // Simulate stage transitions
             let newStage = item.processingStage;
-            let newStatus = item.status;
+            let newStatus: "uploading" | "queued" | "processing" | "analyzing" | "completed" | "failed" = item.status;
 
             if (item.status === "uploading" && newProgress >= 100) {
               newStatus = "queued";
@@ -668,7 +668,7 @@ export default function AFLDashboard() {
             }
 
             if (newProgress >= 100) {
-              newStatus = "completed";
+              newStatus = "completed" as const;
               newStage = "analysis_complete";
               return {
                 ...item,
@@ -829,12 +829,13 @@ export default function AFLDashboard() {
         estimatedCompletion: new Date(
           Date.now() + Math.random() * 600000 + 300000,
         ).toISOString(), // 5-15 minutes
-        priority:
+        priority: (
           selectedFocusAreas.length > 2
             ? "high"
             : Math.random() > 0.5
               ? "medium"
-              : "low",
+              : "low"
+        ) as "low" | "medium" | "high",
         userId: "current_user",
         processingStage: "file_upload",
         errorCount: 0,
