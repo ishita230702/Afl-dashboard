@@ -67,6 +67,9 @@ const generatePlayerData = () => {
         turnovers: 4,
         intercepted: 2,
         goalAccuracy: 67,
+        avgSpeed: 24.8,
+        maxSpeed: 32.4,
+        distance: 12.8,
       },
       form: [85, 89, 91, 87, 93, 88, 87],
       heatMap: [
@@ -102,6 +105,9 @@ const generatePlayerData = () => {
         turnovers: 3,
         intercepted: 1,
         goalAccuracy: 60,
+        avgSpeed: 22.1,
+        maxSpeed: 29.8,
+        distance: 11.2,
       },
       form: [78, 82, 85, 80, 88, 84, 82],
       heatMap: [
@@ -137,6 +143,9 @@ const generatePlayerData = () => {
         turnovers: 5,
         intercepted: 2,
         goalAccuracy: 100,
+        avgSpeed: 25.2,
+        maxSpeed: 31.8,
+        distance: 13.1,
       },
       form: [88, 84, 82, 86, 90, 85, 84],
       heatMap: [
@@ -172,6 +181,9 @@ const generatePlayerData = () => {
         turnovers: 3,
         intercepted: 1,
         goalAccuracy: 100,
+        avgSpeed: 18.9,
+        maxSpeed: 25.6,
+        distance: 9.4,
       },
       form: [82, 78, 85, 83, 80, 79, 78],
       heatMap: [
