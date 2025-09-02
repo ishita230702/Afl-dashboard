@@ -34,7 +34,7 @@ const queryClient = new QueryClient({
         }
       },
       staleTime: 5 * 60 * 1000, // 5 minutes
-      cacheTime: 10 * 60 * 1000, // 10 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes
       refetchOnWindowFocus: false, // Prevent unnecessary refetches that could cause errors
     },
     mutations: {
@@ -84,7 +84,6 @@ export default function App() {
               <Route path="/reports" element={<Reports />} />
               <Route path="/api-diagnostics" element={<ApiDiagnostics />} />
               <Route path="/error-demo" element={<ErrorDemo />} />
-              <Route path="/live-match" element={<AFLDashboard />} />
               <Route path="/stitch" element={<Index />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
