@@ -1802,7 +1802,8 @@ Export ID: ${Date.now()}-${Math.random().toString(36).substr(2, 9)}
           </TabsContent>
 
           {/* Current Match Insights */}
-          <TabsContent value="match" className="space-y-6">
+          {ENABLE_LIVE_FEATURES && (
+            <TabsContent value="match" className="space-y-6">
             <div className="grid lg:grid-cols-3 gap-6">
               {/* Live Score */}
               <Card className="lg:col-span-2">
@@ -1938,6 +1939,7 @@ Export ID: ${Date.now()}-${Math.random().toString(36).substr(2, 9)}
               </CardContent>
             </Card>
           </TabsContent>
+          )}
 
           {/* Crowd Monitoring Dashboard */}
           <TabsContent value="crowd" className="space-y-6">
