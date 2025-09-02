@@ -45,6 +45,11 @@ interface PlayerStats {
   avgSpeed: number;
   maxSpeed: number;
   distance: number;
+  clangers: number;
+  rebounds: number;
+  onePercenters: number;
+  turnovers: number;
+  intercepted: number;
 }
 
 interface AFLPlayer {
