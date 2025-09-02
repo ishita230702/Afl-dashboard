@@ -211,6 +211,9 @@ export default function AFLDashboard() {
   const [isLive, setIsLive] = useState(true);
   const [userEmail, setUserEmail] = useState("");
 
+  // Feature flag to disable live match features
+  const ENABLE_LIVE_FEATURES = false;
+
   // Video upload states
   const [selectedVideoFile, setSelectedVideoFile] = useState<File | null>(null);
   const [isVideoUploading, setIsVideoUploading] = useState(false);
