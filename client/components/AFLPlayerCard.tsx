@@ -47,7 +47,7 @@ interface AFLPlayer {
   photo?: string;
   stats: PlayerStats;
   form: number[];
-  heatMap?: Array<{
+  heatMap: Array<{
     zone: string;
     touches: number;
     effectiveness: number;
