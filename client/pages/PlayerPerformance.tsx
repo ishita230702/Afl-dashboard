@@ -185,6 +185,9 @@ const generatePlayerData = () => {
 
 export default function PlayerPerformance() {
   const [isLive, setIsLive] = useState(true);
+
+  // Feature flag to disable live match features
+  const ENABLE_LIVE_FEATURES = false;
   const [players, setPlayers] = useState(generatePlayerData());
   const [selectedPlayer, setSelectedPlayer] = useState(players[0]);
   const [comparisonPlayer, setComparisonPlayer] = useState(players[1]);
@@ -313,11 +316,13 @@ export default function PlayerPerformance() {
       <div className="lg:ml-64 pb-16 lg:pb-0">
         <div className="p-4 space-y-4">
           {/* Live Clock */}
-          <LiveClock
-            isLive={isLive}
-            onToggleLive={setIsLive}
-            matchTime={{ quarter: 2, timeRemaining: "15:23" }}
-          />
+          {ENABLE_LIVE_FEATURES && (
+            <LiveClock
+              isLive={isLive}
+              onToggleLive={setIsLive}
+              matchTime={{ quarter: 2, timeRemaining: "15:23" }}
+            />
+          )}
 
           {/* Search and Filters */}
           <Card>
