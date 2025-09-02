@@ -211,9 +211,6 @@ export default function AFLDashboard() {
   const [isLive, setIsLive] = useState(true);
   const [userEmail, setUserEmail] = useState("");
 
-  // Feature flag to disable live match features
-  const ENABLE_LIVE_FEATURES = false;
-
   // Video upload states
   const [selectedVideoFile, setSelectedVideoFile] = useState<File | null>(null);
   const [isVideoUploading, setIsVideoUploading] = useState(false);
@@ -634,13 +631,7 @@ export default function AFLDashboard() {
 
             // Simulate stage transitions
             let newStage = item.processingStage;
-            let newStatus:
-              | "uploading"
-              | "queued"
-              | "processing"
-              | "analyzing"
-              | "completed"
-              | "failed" = item.status;
+            let newStatus = item.status;
 
             if (item.status === "uploading" && newProgress >= 100) {
               newStatus = "queued";
@@ -653,7 +644,7 @@ export default function AFLDashboard() {
               };
             }
 
-            if ((item.status as string) === "queued" && Math.random() > 0.7) {
+            if (item.status === "queued" && Math.random() > 0.7) {
               newStatus = "processing";
               newStage = "preprocessing";
               return {
@@ -674,7 +665,7 @@ export default function AFLDashboard() {
             }
 
             if (newProgress >= 100) {
-              newStatus = "completed" as const;
+              newStatus = "completed";
               newStage = "analysis_complete";
               return {
                 ...item,
@@ -835,11 +826,12 @@ export default function AFLDashboard() {
         estimatedCompletion: new Date(
           Date.now() + Math.random() * 600000 + 300000,
         ).toISOString(), // 5-15 minutes
-        priority: (selectedFocusAreas.length > 2
-          ? "high"
-          : Math.random() > 0.5
-            ? "medium"
-            : "low") as "low" | "medium" | "high",
+        priority:
+          selectedFocusAreas.length > 2
+            ? "high"
+            : Math.random() > 0.5
+              ? "medium"
+              : "low",
         userId: "current_user",
         processingStage: "file_upload",
         errorCount: 0,
@@ -1551,12 +1543,10 @@ Export ID: ${Date.now()}-${Math.random().toString(36).substr(2, 9)}
               <BarChart3 className="w-4 h-4" />
               Player Performance
             </TabsTrigger>
-            {ENABLE_LIVE_FEATURES && (
-              <TabsTrigger value="match" className="flex items-center gap-2">
-                <Activity className="w-4 h-4" />
-                Live Match
-              </TabsTrigger>
-            )}
+            <TabsTrigger value="match" className="flex items-center gap-2">
+              <Activity className="w-4 h-4" />
+              Live Match
+            </TabsTrigger>
             <TabsTrigger value="crowd" className="flex items-center gap-2">
               <Users className="w-4 h-4" />
               Crowd Monitor
@@ -1807,146 +1797,142 @@ Export ID: ${Date.now()}-${Math.random().toString(36).substr(2, 9)}
           </TabsContent>
 
           {/* Current Match Insights */}
-          {ENABLE_LIVE_FEATURES && (
-            <TabsContent value="match" className="space-y-6">
-              <div className="grid lg:grid-cols-3 gap-6">
-                {/* Live Score */}
-                <Card className="lg:col-span-2">
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
-                      <span className="flex items-center gap-2">
-                        <Activity className="w-5 h-5" />
-                        Live Match - Carlton vs Adelaide
-                      </span>
-                      <Badge variant="destructive" className="animate-pulse">
-                        LIVE
-                      </Badge>
-                    </CardTitle>
-                    <CardDescription>
-                      Quarter 2 - 15:23 remaining
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-center space-y-4">
-                      <div className="flex justify-center items-center space-x-8">
-                        <div className="text-center">
-                          <div className="text-4xl font-bold text-blue-600">
-                            72
-                          </div>
-                          <div className="text-lg">Carlton</div>
-                        </div>
-                        <div className="text-2xl text-gray-400">vs</div>
-                        <div className="text-center">
-                          <div className="text-4xl font-bold text-red-600">
-                            68
-                          </div>
-                          <div className="text-lg">Adelaide</div>
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-3 gap-4 mt-6">
-                        <div className="text-center p-3 bg-gray-50 rounded">
-                          <div className="text-lg font-semibold">324</div>
-                          <div className="text-sm text-gray-600">
-                            Total Disposals
-                          </div>
-                        </div>
-                        <div className="text-center p-3 bg-gray-50 rounded">
-                          <div className="text-lg font-semibold">42</div>
-                          <div className="text-sm text-gray-600">Marks</div>
-                        </div>
-                        <div className="text-center p-3 bg-gray-50 rounded">
-                          <div className="text-lg font-semibold">28</div>
-                          <div className="text-sm text-gray-600">Tackles</div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Match Stats */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <BarChart3 className="w-5 h-5" />
-                      Match Statistics
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-3">
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Possession %</span>
-                          <span>Carlton 52%</span>
-                        </div>
-                        <Progress value={52} className="h-2" />
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Inside 50s</span>
-                          <span>28 - 24</span>
-                        </div>
-                        <Progress value={54} className="h-2" />
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Contested Marks</span>
-                          <span>8 - 6</span>
-                        </div>
-                        <Progress value={57} className="h-2" />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Live Events Timeline */}
-              <Card>
+          <TabsContent value="match" className="space-y-6">
+            <div className="grid lg:grid-cols-3 gap-6">
+              {/* Live Score */}
+              <Card className="lg:col-span-2">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Clock className="w-5 h-5" />
-                    Live Events Timeline
+                  <CardTitle className="flex items-center justify-between">
+                    <span className="flex items-center gap-2">
+                      <Activity className="w-5 h-5" />
+                      Live Match - Carlton vs Adelaide
+                    </span>
+                    <Badge variant="destructive" className="animate-pulse">
+                      LIVE
+                    </Badge>
                   </CardTitle>
+                  <CardDescription>Quarter 2 - 15:23 remaining</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-4">
-                    {matchEvents.map((event, index) => (
-                      <div
-                        key={index}
-                        className="flex items-start space-x-4 p-3 bg-gray-50 rounded-lg"
-                      >
-                        <div className="text-sm font-mono bg-gray-200 px-2 py-1 rounded">
-                          {event.time}
+                  <div className="text-center space-y-4">
+                    <div className="flex justify-center items-center space-x-8">
+                      <div className="text-center">
+                        <div className="text-4xl font-bold text-blue-600">
+                          72
                         </div>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2">
-                            <Badge
-                              variant={
-                                event.event === "GOAL"
-                                  ? "default"
-                                  : event.event === "BEHIND"
-                                    ? "secondary"
-                                    : "outline"
-                              }
-                            >
-                              {event.event}
-                            </Badge>
-                            <span className="font-medium">{event.player}</span>
-                            <span className="text-sm text-gray-600">
-                              ({event.team})
-                            </span>
-                          </div>
-                          <p className="text-sm text-gray-600 mt-1">
-                            {event.description}
-                          </p>
+                        <div className="text-lg">Carlton</div>
+                      </div>
+                      <div className="text-2xl text-gray-400">vs</div>
+                      <div className="text-center">
+                        <div className="text-4xl font-bold text-red-600">
+                          68
+                        </div>
+                        <div className="text-lg">Adelaide</div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-4 mt-6">
+                      <div className="text-center p-3 bg-gray-50 rounded">
+                        <div className="text-lg font-semibold">324</div>
+                        <div className="text-sm text-gray-600">
+                          Total Disposals
                         </div>
                       </div>
-                    ))}
+                      <div className="text-center p-3 bg-gray-50 rounded">
+                        <div className="text-lg font-semibold">42</div>
+                        <div className="text-sm text-gray-600">Marks</div>
+                      </div>
+                      <div className="text-center p-3 bg-gray-50 rounded">
+                        <div className="text-lg font-semibold">28</div>
+                        <div className="text-sm text-gray-600">Tackles</div>
+                      </div>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
-            </TabsContent>
-          )}
+
+              {/* Match Stats */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <BarChart3 className="w-5 h-5" />
+                    Match Statistics
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-3">
+                    <div>
+                      <div className="flex justify-between text-sm mb-1">
+                        <span>Possession %</span>
+                        <span>Carlton 52%</span>
+                      </div>
+                      <Progress value={52} className="h-2" />
+                    </div>
+                    <div>
+                      <div className="flex justify-between text-sm mb-1">
+                        <span>Inside 50s</span>
+                        <span>28 - 24</span>
+                      </div>
+                      <Progress value={54} className="h-2" />
+                    </div>
+                    <div>
+                      <div className="flex justify-between text-sm mb-1">
+                        <span>Contested Marks</span>
+                        <span>8 - 6</span>
+                      </div>
+                      <Progress value={57} className="h-2" />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Live Events Timeline */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Clock className="w-5 h-5" />
+                  Live Events Timeline
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {matchEvents.map((event, index) => (
+                    <div
+                      key={index}
+                      className="flex items-start space-x-4 p-3 bg-gray-50 rounded-lg"
+                    >
+                      <div className="text-sm font-mono bg-gray-200 px-2 py-1 rounded">
+                        {event.time}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <Badge
+                            variant={
+                              event.event === "GOAL"
+                                ? "default"
+                                : event.event === "BEHIND"
+                                  ? "secondary"
+                                  : "outline"
+                            }
+                          >
+                            {event.event}
+                          </Badge>
+                          <span className="font-medium">{event.player}</span>
+                          <span className="text-sm text-gray-600">
+                            ({event.team})
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-600 mt-1">
+                          {event.description}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
           {/* Crowd Monitoring Dashboard */}
           <TabsContent value="crowd" className="space-y-6">

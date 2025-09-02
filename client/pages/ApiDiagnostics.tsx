@@ -50,7 +50,6 @@ import {
   Eye,
   AlertTriangle,
   RefreshCw,
-  Loader,
 } from "lucide-react";
 
 // Mock API endpoints and their status
