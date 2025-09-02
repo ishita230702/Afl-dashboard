@@ -83,9 +83,9 @@ export default function PlayerComparison({
   selectedPlayer2,
   onPlayerSelect,
 }: PlayerComparisonProps) {
-  const [comparisonType, setComparisonType] = useState<"radar" | "bar" | "form">(
-    "radar"
-  );
+  const [comparisonType, setComparisonType] = useState<
+    "radar" | "bar" | "form"
+  >("radar");
 
   const player1 = selectedPlayer1 || players[0];
   const player2 = selectedPlayer2 || players[1];
@@ -165,11 +165,14 @@ export default function PlayerComparison({
   ];
 
   // Prepare form comparison data
-  const formData = Array.from({ length: Math.max(player1.form.length, player2.form.length) }, (_, i) => ({
-    game: `Game ${i + 1}`,
-    player1: player1.form[i] || 0,
-    player2: player2.form[i] || 0,
-  }));
+  const formData = Array.from(
+    { length: Math.max(player1.form.length, player2.form.length) },
+    (_, i) => ({
+      game: `Game ${i + 1}`,
+      player1: player1.form[i] || 0,
+      player2: player2.form[i] || 0,
+    }),
+  );
 
   const getTeamColor = (team: string) => {
     const teamColors: Record<string, string> = {
@@ -194,7 +197,12 @@ export default function PlayerComparison({
     }
   };
 
-  const StatComparison = ({ label, value1, value2, unit = "" }: {
+  const StatComparison = ({
+    label,
+    value1,
+    value2,
+    unit = "",
+  }: {
     label: string;
     value1: number;
     value2: number;
@@ -210,12 +218,18 @@ export default function PlayerComparison({
         <div className="flex justify-between items-center">
           <span className="text-sm font-medium">{label}</span>
           <div className="flex items-center gap-2">
-            <span className={cn("text-sm", winner1 && "font-bold text-green-600")}>
-              {value1}{unit}
+            <span
+              className={cn("text-sm", winner1 && "font-bold text-green-600")}
+            >
+              {value1}
+              {unit}
             </span>
             <span className="text-gray-400">vs</span>
-            <span className={cn("text-sm", winner2 && "font-bold text-green-600")}>
-              {value2}{unit}
+            <span
+              className={cn("text-sm", winner2 && "font-bold text-green-600")}
+            >
+              {value2}
+              {unit}
             </span>
           </div>
         </div>
@@ -317,7 +331,10 @@ export default function PlayerComparison({
       {/* Player Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Player 1 Card */}
-        <Card className="border-2" style={{ borderColor: getTeamColor(player1.team) }}>
+        <Card
+          className="border-2"
+          style={{ borderColor: getTeamColor(player1.team) }}
+        >
           <CardHeader className="text-center pb-2">
             <div className="flex items-center justify-center gap-2">
               <div
@@ -328,22 +345,30 @@ export default function PlayerComparison({
               </div>
               <div>
                 <CardTitle className="text-lg">{player1.name}</CardTitle>
-                <p className="text-sm text-gray-600">{player1.team} • {player1.position}</p>
+                <p className="text-sm text-gray-600">
+                  {player1.team} • {player1.position}
+                </p>
               </div>
             </div>
           </CardHeader>
           <CardContent className="pt-0">
             <div className="grid grid-cols-3 gap-2 text-center">
               <div className="bg-blue-50 p-2 rounded">
-                <div className="text-lg font-bold text-blue-600">{player1.stats.goals}</div>
+                <div className="text-lg font-bold text-blue-600">
+                  {player1.stats.goals}
+                </div>
                 <div className="text-xs text-gray-600">Goals</div>
               </div>
               <div className="bg-green-50 p-2 rounded">
-                <div className="text-lg font-bold text-green-600">{player1.stats.disposals}</div>
+                <div className="text-lg font-bold text-green-600">
+                  {player1.stats.disposals}
+                </div>
                 <div className="text-xs text-gray-600">Disposals</div>
               </div>
               <div className="bg-purple-50 p-2 rounded">
-                <div className="text-lg font-bold text-purple-600">{player1.stats.efficiency}%</div>
+                <div className="text-lg font-bold text-purple-600">
+                  {player1.stats.efficiency}%
+                </div>
                 <div className="text-xs text-gray-600">Efficiency</div>
               </div>
             </div>
@@ -351,7 +376,10 @@ export default function PlayerComparison({
         </Card>
 
         {/* Player 2 Card */}
-        <Card className="border-2" style={{ borderColor: getTeamColor(player2.team) }}>
+        <Card
+          className="border-2"
+          style={{ borderColor: getTeamColor(player2.team) }}
+        >
           <CardHeader className="text-center pb-2">
             <div className="flex items-center justify-center gap-2">
               <div
@@ -362,22 +390,30 @@ export default function PlayerComparison({
               </div>
               <div>
                 <CardTitle className="text-lg">{player2.name}</CardTitle>
-                <p className="text-sm text-gray-600">{player2.team} • {player2.position}</p>
+                <p className="text-sm text-gray-600">
+                  {player2.team} • {player2.position}
+                </p>
               </div>
             </div>
           </CardHeader>
           <CardContent className="pt-0">
             <div className="grid grid-cols-3 gap-2 text-center">
               <div className="bg-blue-50 p-2 rounded">
-                <div className="text-lg font-bold text-blue-600">{player2.stats.goals}</div>
+                <div className="text-lg font-bold text-blue-600">
+                  {player2.stats.goals}
+                </div>
                 <div className="text-xs text-gray-600">Goals</div>
               </div>
               <div className="bg-green-50 p-2 rounded">
-                <div className="text-lg font-bold text-green-600">{player2.stats.disposals}</div>
+                <div className="text-lg font-bold text-green-600">
+                  {player2.stats.disposals}
+                </div>
                 <div className="text-xs text-gray-600">Disposals</div>
               </div>
               <div className="bg-purple-50 p-2 rounded">
-                <div className="text-lg font-bold text-purple-600">{player2.stats.efficiency}%</div>
+                <div className="text-lg font-bold text-purple-600">
+                  {player2.stats.efficiency}%
+                </div>
                 <div className="text-xs text-gray-600">Efficiency</div>
               </div>
             </div>
@@ -425,11 +461,7 @@ export default function PlayerComparison({
                 <RadarChart data={radarData}>
                   <PolarGrid />
                   <PolarAngleAxis dataKey="stat" />
-                  <PolarRadiusAxis
-                    angle={90}
-                    domain={[0, 100]}
-                    tickCount={6}
-                  />
+                  <PolarRadiusAxis angle={90} domain={[0, 100]} tickCount={6} />
                   <Radar
                     name={player1.name}
                     dataKey="player1"

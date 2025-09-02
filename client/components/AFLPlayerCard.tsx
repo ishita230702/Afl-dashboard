@@ -115,14 +115,14 @@ export default function AFLPlayerCard({
         "group cursor-pointer transition-all duration-300 hover:shadow-lg transform-gpu",
         "relative w-full h-64 [perspective:1000px]",
         isSelected && "ring-2 ring-blue-500 ring-offset-2",
-        className
+        className,
       )}
       onClick={handleCardClick}
     >
       <div
         className={cn(
           "relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d]",
-          isFlipped && "[transform:rotateY(180deg)]"
+          isFlipped && "[transform:rotateY(180deg)]",
         )}
       >
         {/* Front of card - Player Info */}
@@ -132,7 +132,7 @@ export default function AFLPlayerCard({
             <div
               className={cn(
                 "h-20 rounded-t-lg flex items-center justify-between px-4 text-white",
-                getTeamColor(player.team)
+                getTeamColor(player.team),
               )}
             >
               <div className="flex items-center gap-2">
@@ -231,14 +231,18 @@ export default function AFLPlayerCard({
               <div className="flex-1 space-y-3 overflow-y-auto">
                 {/* Core Stats */}
                 <div className="space-y-2">
-                  <h4 className="font-medium text-sm text-gray-700">Core Stats</h4>
+                  <h4 className="font-medium text-sm text-gray-700">
+                    Core Stats
+                  </h4>
                   <div className="grid grid-cols-2 gap-2 text-xs">
                     <div className="bg-gray-50 p-2 rounded">
                       <div className="font-semibold">{player.stats.kicks}</div>
                       <div className="text-gray-600">Kicks</div>
                     </div>
                     <div className="bg-gray-50 p-2 rounded">
-                      <div className="font-semibold">{player.stats.handballs}</div>
+                      <div className="font-semibold">
+                        {player.stats.handballs}
+                      </div>
                       <div className="text-gray-600">Handballs</div>
                     </div>
                     <div className="bg-gray-50 p-2 rounded">
@@ -246,7 +250,9 @@ export default function AFLPlayerCard({
                       <div className="text-gray-600">Marks</div>
                     </div>
                     <div className="bg-gray-50 p-2 rounded">
-                      <div className="font-semibold">{player.stats.tackles}</div>
+                      <div className="font-semibold">
+                        {player.stats.tackles}
+                      </div>
                       <div className="text-gray-600">Tackles</div>
                     </div>
                   </div>
@@ -254,35 +260,49 @@ export default function AFLPlayerCard({
 
                 {/* Efficiency Meters */}
                 <div className="space-y-2">
-                  <h4 className="font-medium text-sm text-gray-700">Efficiency</h4>
+                  <h4 className="font-medium text-sm text-gray-700">
+                    Efficiency
+                  </h4>
                   <div className="space-y-1.5">
                     <div>
                       <div className="flex justify-between text-xs mb-1">
                         <span>Overall</span>
                         <span>{player.stats.efficiency}%</span>
                       </div>
-                      <Progress value={player.stats.efficiency} className="h-1.5" />
+                      <Progress
+                        value={player.stats.efficiency}
+                        className="h-1.5"
+                      />
                     </div>
                     <div>
                       <div className="flex justify-between text-xs mb-1">
                         <span>Goal Accuracy</span>
                         <span>{player.stats.goalAccuracy}%</span>
                       </div>
-                      <Progress value={player.stats.goalAccuracy} className="h-1.5" />
+                      <Progress
+                        value={player.stats.goalAccuracy}
+                        className="h-1.5"
+                      />
                     </div>
                   </div>
                 </div>
 
                 {/* Movement Stats */}
                 <div className="space-y-2">
-                  <h4 className="font-medium text-sm text-gray-700">Movement</h4>
+                  <h4 className="font-medium text-sm text-gray-700">
+                    Movement
+                  </h4>
                   <div className="grid grid-cols-2 gap-2 text-xs">
                     <div className="bg-blue-50 p-2 rounded">
-                      <div className="font-semibold">{player.stats.avgSpeed}</div>
+                      <div className="font-semibold">
+                        {player.stats.avgSpeed}
+                      </div>
                       <div className="text-gray-600">Avg Speed</div>
                     </div>
                     <div className="bg-red-50 p-2 rounded">
-                      <div className="font-semibold">{player.stats.maxSpeed}</div>
+                      <div className="font-semibold">
+                        {player.stats.maxSpeed}
+                      </div>
                       <div className="text-gray-600">Max Speed</div>
                     </div>
                   </div>
@@ -290,7 +310,9 @@ export default function AFLPlayerCard({
 
                 {/* Recent Form */}
                 <div className="space-y-2">
-                  <h4 className="font-medium text-sm text-gray-700">Recent Form</h4>
+                  <h4 className="font-medium text-sm text-gray-700">
+                    Recent Form
+                  </h4>
                   <div className="grid grid-cols-3 gap-1">
                     {recentForm.map((score, index) => (
                       <div
@@ -301,7 +323,7 @@ export default function AFLPlayerCard({
                             ? "bg-green-100 text-green-700"
                             : score >= 80
                               ? "bg-yellow-100 text-yellow-700"
-                              : "bg-red-100 text-red-700"
+                              : "bg-red-100 text-red-700",
                         )}
                       >
                         {score}
