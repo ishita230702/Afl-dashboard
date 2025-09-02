@@ -20,6 +20,8 @@ import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MobileNavigation from "@/components/MobileNavigation";
 import LiveClock from "@/components/LiveClock";
+import AFLPlayerCard from "@/components/AFLPlayerCard";
+import PlayerComparison from "@/components/PlayerComparison";
 import {
   Search,
   Filter,
@@ -65,6 +67,9 @@ const generatePlayerData = () => {
         turnovers: 4,
         intercepted: 2,
         goalAccuracy: 67,
+        avgSpeed: 24.8,
+        maxSpeed: 32.4,
+        distance: 12.8,
       },
       form: [85, 89, 91, 87, 93, 88, 87],
       heatMap: [
@@ -100,6 +105,9 @@ const generatePlayerData = () => {
         turnovers: 3,
         intercepted: 1,
         goalAccuracy: 60,
+        avgSpeed: 22.1,
+        maxSpeed: 29.8,
+        distance: 11.2,
       },
       form: [78, 82, 85, 80, 88, 84, 82],
       heatMap: [
@@ -135,6 +143,9 @@ const generatePlayerData = () => {
         turnovers: 5,
         intercepted: 2,
         goalAccuracy: 100,
+        avgSpeed: 25.2,
+        maxSpeed: 31.8,
+        distance: 13.1,
       },
       form: [88, 84, 82, 86, 90, 85, 84],
       heatMap: [
@@ -170,6 +181,9 @@ const generatePlayerData = () => {
         turnovers: 3,
         intercepted: 1,
         goalAccuracy: 100,
+        avgSpeed: 18.9,
+        maxSpeed: 25.6,
+        distance: 9.4,
       },
       form: [82, 78, 85, 83, 80, 79, 78],
       heatMap: [
@@ -185,6 +199,9 @@ const generatePlayerData = () => {
 
 export default function PlayerPerformance() {
   const [isLive, setIsLive] = useState(true);
+
+  // Feature flag to disable live match features
+  const ENABLE_LIVE_FEATURES = false;
   const [players, setPlayers] = useState(generatePlayerData());
   const [selectedPlayer, setSelectedPlayer] = useState(players[0]);
   const [comparisonPlayer, setComparisonPlayer] = useState(players[1]);
@@ -313,11 +330,13 @@ export default function PlayerPerformance() {
       <div className="lg:ml-64 pb-16 lg:pb-0">
         <div className="p-4 space-y-4">
           {/* Live Clock */}
-          <LiveClock
-            isLive={isLive}
-            onToggleLive={setIsLive}
-            matchTime={{ quarter: 2, timeRemaining: "15:23" }}
-          />
+          {ENABLE_LIVE_FEATURES && (
+            <LiveClock
+              isLive={isLive}
+              onToggleLive={setIsLive}
+              matchTime={{ quarter: 2, timeRemaining: "15:23" }}
+            />
+          )}
 
           {/* Search and Filters */}
           <Card>
@@ -370,24 +389,15 @@ export default function PlayerPerformance() {
             </CardContent>
           </Card>
 
-          {/* Player Selection */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          {/* Player Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {filteredPlayers.slice(0, 8).map((player) => (
-              <button
+              <AFLPlayerCard
                 key={player.id}
+                player={player}
+                isSelected={selectedPlayer.id === player.id}
                 onClick={() => setSelectedPlayer(player)}
-                className={`p-3 rounded-lg border text-left transition-colors ${
-                  selectedPlayer.id === player.id
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-gray-200 hover:border-gray-300 bg-white"
-                }`}
-              >
-                <div className="font-medium text-sm truncate">
-                  {player.name}
-                </div>
-                <div className="text-xs text-gray-600">{player.team}</div>
-                <div className="text-xs text-green-600">#{player.number}</div>
-              </button>
+              />
             ))}
           </div>
 
@@ -590,52 +600,18 @@ export default function PlayerPerformance() {
                 </TabsContent>
 
                 <TabsContent value="compare" className="space-y-4">
-                  <div className="space-y-3">
-                    <div>
-                      <label className="text-sm font-medium">
-                        Compare with:
-                      </label>
-                      <Select
-                        value={comparisonPlayer.name}
-                        onValueChange={(name) => {
-                          const player = players.find((p) => p.name === name);
-                          if (player) setComparisonPlayer(player);
-                        }}
-                      >
-                        <SelectTrigger className="w-full mt-1">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {players
-                            .filter((p) => p.id !== selectedPlayer.id)
-                            .map((player) => (
-                              <SelectItem key={player.id} value={player.name}>
-                                {player.name} ({player.team})
-                              </SelectItem>
-                            ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="space-y-4">
-                      {[
-                        "disposals",
-                        "kicks",
-                        "handballs",
-                        "marks",
-                        "tackles",
-                        "goals",
-                        "efficiency",
-                      ].map((stat) => (
-                        <ComparisonChart
-                          key={stat}
-                          stat={stat}
-                          player1={selectedPlayer}
-                          player2={comparisonPlayer}
-                        />
-                      ))}
-                    </div>
-                  </div>
+                  <PlayerComparison
+                    players={players}
+                    selectedPlayer1={selectedPlayer}
+                    selectedPlayer2={comparisonPlayer}
+                    onPlayerSelect={(player, position) => {
+                      if (position === 1) {
+                        setSelectedPlayer(player);
+                      } else {
+                        setComparisonPlayer(player);
+                      }
+                    }}
+                  />
                 </TabsContent>
               </Tabs>
             </CardContent>
