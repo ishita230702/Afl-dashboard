@@ -68,14 +68,28 @@ import {
 // Comprehensive player data with enhanced AFL statistics
 const generatePlayerData = () => {
   const teams = [
-    "Western Bulldogs", "Richmond", "Geelong", "Melbourne", "Carlton", 
-    "Adelaide", "West Coast", "Collingwood", "Essendon", "Fremantle",
-    "Brisbane", "Sydney", "St Kilda", "Port Adelaide", "North Melbourne",
-    "Gold Coast", "GWS Giants", "Hawthorn"
+    "Western Bulldogs",
+    "Richmond",
+    "Geelong",
+    "Melbourne",
+    "Carlton",
+    "Adelaide",
+    "West Coast",
+    "Collingwood",
+    "Essendon",
+    "Fremantle",
+    "Brisbane",
+    "Sydney",
+    "St Kilda",
+    "Port Adelaide",
+    "North Melbourne",
+    "Gold Coast",
+    "GWS Giants",
+    "Hawthorn",
   ];
 
   const positions = ["Midfielder", "Forward", "Defender", "Ruckman"];
-  
+
   const players = [
     {
       id: 1,
@@ -86,7 +100,8 @@ const generatePlayerData = () => {
       age: 28,
       height: "1.93m",
       weight: "92kg",
-      photo: "https://cdn.builder.io/api/v1/image/assets%2Faf9aef6647464a4bb798d09aa34aaa76%2F35a79c1a43bd4be1a3d3d6a95b0b1a79?format=webp&width=100",
+      photo:
+        "https://cdn.builder.io/api/v1/image/assets%2Faf9aef6647464a4bb798d09aa34aaa76%2F35a79c1a43bd4be1a3d3d6a95b0b1a79?format=webp&width=100",
       stats: {
         kicks: 28,
         handballs: 12,
@@ -134,7 +149,8 @@ const generatePlayerData = () => {
       age: 35,
       height: "1.78m",
       weight: "78kg",
-      photo: "https://cdn.builder.io/api/v1/image/assets%2Faf9aef6647464a4bb798d09aa34aaa76%2F35a79c1a43bd4be1a3d3d6a95b0b1a79?format=webp&width=100",
+      photo:
+        "https://cdn.builder.io/api/v1/image/assets%2Faf9aef6647464a4bb798d09aa34aaa76%2F35a79c1a43bd4be1a3d3d6a95b0b1a79?format=webp&width=100",
       stats: {
         kicks: 31,
         handballs: 14,
@@ -183,7 +199,8 @@ const generatePlayerData = () => {
       age: Math.floor(Math.random() * 15) + 20,
       height: `1.${Math.floor(Math.random() * 30) + 70}m`,
       weight: `${Math.floor(Math.random() * 30) + 75}kg`,
-      photo: "https://cdn.builder.io/api/v1/image/assets%2Faf9aef6647464a4bb798d09aa34aaa76%2F35a79c1a43bd4be1a3d3d6a95b0b1a79?format=webp&width=100",
+      photo:
+        "https://cdn.builder.io/api/v1/image/assets%2Faf9aef6647464a4bb798d09aa34aaa76%2F35a79c1a43bd4be1a3d3d6a95b0b1a79?format=webp&width=100",
       stats: {
         kicks: Math.floor(Math.random() * 20) + 15,
         handballs: Math.floor(Math.random() * 15) + 5,
@@ -206,17 +223,32 @@ const generatePlayerData = () => {
         maxSpeed: Math.random() * 10 + 28,
         distance: Math.random() * 5 + 10,
       },
-      form: Array.from({ length: 10 }, () => Math.floor(Math.random() * 25) + 75),
+      form: Array.from(
+        { length: 10 },
+        () => Math.floor(Math.random() * 25) + 75,
+      ),
       heatMap: [
-        { zone: "Forward 50", touches: Math.floor(Math.random() * 15) + 5, effectiveness: Math.floor(Math.random() * 20) + 75 },
-        { zone: "Center Bounce", touches: Math.floor(Math.random() * 20) + 10, effectiveness: Math.floor(Math.random() * 20) + 75 },
-        { zone: "Defensive 50", touches: Math.floor(Math.random() * 12) + 3, effectiveness: Math.floor(Math.random() * 20) + 75 },
+        {
+          zone: "Forward 50",
+          touches: Math.floor(Math.random() * 15) + 5,
+          effectiveness: Math.floor(Math.random() * 20) + 75,
+        },
+        {
+          zone: "Center Bounce",
+          touches: Math.floor(Math.random() * 20) + 10,
+          effectiveness: Math.floor(Math.random() * 20) + 75,
+        },
+        {
+          zone: "Defensive 50",
+          touches: Math.floor(Math.random() * 12) + 3,
+          effectiveness: Math.floor(Math.random() * 20) + 75,
+        },
       ],
       possessionData: Array.from({ length: 7 }, (_, j) => ({
         time: j * 5,
         possession: Math.floor(Math.random() * 20) + 5 + j * 2,
       })),
-    }))
+    })),
   ];
 
   return players;
@@ -226,14 +258,16 @@ export default function PlayerPerformance() {
   const [isLive, setIsLive] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const ENABLE_LIVE_FEATURES = true;
-  
+
   const [players, setPlayers] = useState(generatePlayerData());
   const [selectedPlayer, setSelectedPlayer] = useState(players[0]);
   const [comparisonPlayer, setComparisonPlayer] = useState(players[1]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTeam, setSelectedTeam] = useState("all");
   const [selectedPosition, setSelectedPosition] = useState("all");
-  const [chartType, setChartType] = useState<"possession" | "performance" | "comparison">("possession");
+  const [chartType, setChartType] = useState<
+    "possession" | "performance" | "comparison"
+  >("possession");
 
   // Simulate live data updates
   useEffect(() => {
@@ -265,39 +299,72 @@ export default function PlayerPerformance() {
       (selectedPosition === "all" || player.position === selectedPosition),
   );
 
-  const uniqueTeams = [...new Set(players.map(p => p.team))];
+  const uniqueTeams = [...new Set(players.map((p) => p.team))];
 
   // Performance metrics data for charts
   const performanceMetrics = [
-    { name: "Goals", value: selectedPlayer.stats.goals, target: 3, color: "#8884d8" },
-    { name: "Disposals", value: selectedPlayer.stats.disposals, target: 35, color: "#82ca9d" },
-    { name: "Marks", value: selectedPlayer.stats.marks, target: 10, color: "#ffc658" },
-    { name: "Tackles", value: selectedPlayer.stats.tackles, target: 8, color: "#ff7300" },
-    { name: "Efficiency", value: selectedPlayer.stats.efficiency, target: 85, color: "#00ff00" },
+    {
+      name: "Goals",
+      value: selectedPlayer.stats.goals,
+      target: 3,
+      color: "#8884d8",
+    },
+    {
+      name: "Disposals",
+      value: selectedPlayer.stats.disposals,
+      target: 35,
+      color: "#82ca9d",
+    },
+    {
+      name: "Marks",
+      value: selectedPlayer.stats.marks,
+      target: 10,
+      color: "#ffc658",
+    },
+    {
+      name: "Tackles",
+      value: selectedPlayer.stats.tackles,
+      target: 8,
+      color: "#ff7300",
+    },
+    {
+      name: "Efficiency",
+      value: selectedPlayer.stats.efficiency,
+      target: 85,
+      color: "#00ff00",
+    },
   ];
 
   const playerMetrics = [
     { metric: "Goals", value: selectedPlayer.stats.goals, max: 5 },
-    { metric: "Assists", value: Math.floor(selectedPlayer.stats.inside50s / 2), max: 4 },
+    {
+      metric: "Assists",
+      value: Math.floor(selectedPlayer.stats.inside50s / 2),
+      max: 4,
+    },
     { metric: "Tackles", value: selectedPlayer.stats.tackles, max: 10 },
     { metric: "Marks", value: selectedPlayer.stats.marks, max: 12 },
     { metric: "Efficiency", value: selectedPlayer.stats.efficiency, max: 100 },
-    { metric: "Speed", value: Math.round(selectedPlayer.stats.avgSpeed), max: 35 },
+    {
+      metric: "Speed",
+      value: Math.round(selectedPlayer.stats.avgSpeed),
+      max: 35,
+    },
   ];
 
   const getTeamColor = (team: string) => {
     const teamColors: Record<string, string> = {
       "Western Bulldogs": "#1E40AF",
-      "Brisbane": "#8B0000",
-      "Richmond": "#FFD700",
-      "Geelong": "#1E3A8A",
-      "Melbourne": "#DC2626",
-      "Carlton": "#3B82F6",
-      "Adelaide": "#EF4444",
+      Brisbane: "#8B0000",
+      Richmond: "#FFD700",
+      Geelong: "#1E3A8A",
+      Melbourne: "#DC2626",
+      Carlton: "#3B82F6",
+      Adelaide: "#EF4444",
       "West Coast": "#1D4ED8",
-      "Collingwood": "#000000",
-      "Essendon": "#B91C1C",
-      "Fremantle": "#9333EA",
+      Collingwood: "#000000",
+      Essendon: "#B91C1C",
+      Fremantle: "#9333EA",
     };
     return teamColors[team] || "#6B7280";
   };
@@ -338,21 +405,25 @@ export default function PlayerPerformance() {
             </div>
           )}
         </div>
-        <div className={`text-2xl font-bold text-${color}-600 mb-1`}>{value}</div>
+        <div className={`text-2xl font-bold text-${color}-600 mb-1`}>
+          {value}
+        </div>
         {subtitle && <div className="text-xs text-gray-500">{subtitle}</div>}
-        <div className={`absolute bottom-0 right-0 w-16 h-16 bg-${color}-100 rounded-full -mr-8 -mb-8 opacity-50`} />
+        <div
+          className={`absolute bottom-0 right-0 w-16 h-16 bg-${color}-100 rounded-full -mr-8 -mb-8 opacity-50`}
+        />
       </CardContent>
     </Card>
   );
 
   const EnhancedPlayerCard = ({ player, isSelected, onClick }: any) => (
-    <Card 
+    <Card
       className={`cursor-pointer transition-all duration-300 hover:shadow-lg ${
-        isSelected ? 'ring-2 ring-blue-500 ring-offset-2' : ''
+        isSelected ? "ring-2 ring-blue-500 ring-offset-2" : ""
       }`}
       onClick={onClick}
     >
-      <div 
+      <div
         className="h-24 rounded-t-lg relative"
         style={{ backgroundColor: getTeamColor(player.team) }}
       >
@@ -365,7 +436,7 @@ export default function PlayerPerformance() {
           <div className="text-xs">DISPOSALS</div>
         </div>
       </div>
-      
+
       <CardContent className="p-4">
         <div className="flex items-center gap-3 mb-3">
           {player.photo ? (
@@ -377,7 +448,10 @@ export default function PlayerPerformance() {
           ) : (
             <div className="w-12 h-12 rounded-full bg-gray-300 border-2 border-white shadow-lg flex items-center justify-center">
               <span className="text-sm font-bold text-gray-600">
-                {player.name.split(" ").map((n: string) => n[0]).join("")}
+                {player.name
+                  .split(" ")
+                  .map((n: string) => n[0])
+                  .join("")}
               </span>
             </div>
           )}
@@ -397,7 +471,9 @@ export default function PlayerPerformance() {
             <div className="text-gray-600">Marks</div>
           </div>
           <div className="bg-purple-50 p-2 rounded">
-            <div className="font-bold text-purple-600">{player.stats.efficiency}%</div>
+            <div className="font-bold text-purple-600">
+              {player.stats.efficiency}%
+            </div>
             <div className="text-gray-600">Eff.</div>
           </div>
         </div>
@@ -415,8 +491,12 @@ export default function PlayerPerformance() {
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Player Performance</h1>
-              <p className="text-gray-600">Real-time AFL player analytics and statistics</p>
+              <h1 className="text-3xl font-bold text-gray-900">
+                Player Performance
+              </h1>
+              <p className="text-gray-600">
+                Real-time AFL player analytics and statistics
+              </p>
             </div>
             <div className="flex items-center gap-2">
               <Button
@@ -425,7 +505,11 @@ export default function PlayerPerformance() {
                 onClick={() => setIsPlaying(!isPlaying)}
                 className="flex items-center gap-2"
               >
-                {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                {isPlaying ? (
+                  <Pause className="w-4 h-4" />
+                ) : (
+                  <Play className="w-4 h-4" />
+                )}
                 {isPlaying ? "Pause" : "Play"} Live
               </Button>
               <Button variant="outline" size="sm">
@@ -472,7 +556,10 @@ export default function PlayerPerformance() {
             />
             <StatCard
               title="Total Disposals"
-              value={filteredPlayers.reduce((sum, p) => sum + p.stats.disposals, 0)}
+              value={filteredPlayers.reduce(
+                (sum, p) => sum + p.stats.disposals,
+                0,
+              )}
               icon={BarChart3}
               color="orange"
               trend="up"
@@ -501,12 +588,17 @@ export default function PlayerPerformance() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">All Teams</SelectItem>
-                    {uniqueTeams.map(team => (
-                      <SelectItem key={team} value={team}>{team}</SelectItem>
+                    {uniqueTeams.map((team) => (
+                      <SelectItem key={team} value={team}>
+                        {team}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-                <Select value={selectedPosition} onValueChange={setSelectedPosition}>
+                <Select
+                  value={selectedPosition}
+                  onValueChange={setSelectedPosition}
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Filter by position" />
                   </SelectTrigger>
@@ -538,50 +630,73 @@ export default function PlayerPerformance() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Large Player Card */}
             <Card className="lg:col-span-1">
-              <div 
+              <div
                 className="h-32 rounded-t-lg relative flex items-center justify-center"
                 style={{ backgroundColor: getTeamColor(selectedPlayer.team) }}
               >
                 <div className="text-center text-white">
-                  <div className="text-4xl font-bold mb-2">#{selectedPlayer.number}</div>
-                  <div className="text-lg font-semibold">{selectedPlayer.name}</div>
-                  <div className="text-sm opacity-90">{selectedPlayer.team}</div>
+                  <div className="text-4xl font-bold mb-2">
+                    #{selectedPlayer.number}
+                  </div>
+                  <div className="text-lg font-semibold">
+                    {selectedPlayer.name}
+                  </div>
+                  <div className="text-sm opacity-90">
+                    {selectedPlayer.team}
+                  </div>
                 </div>
               </div>
               <CardContent className="p-6">
                 <div className="space-y-4">
                   <div className="text-center">
-                    <Badge variant="outline" className="mb-2">{selectedPlayer.position}</Badge>
+                    <Badge variant="outline" className="mb-2">
+                      {selectedPlayer.position}
+                    </Badge>
                     <p className="text-sm text-gray-600">
-                      {selectedPlayer.age}y • {selectedPlayer.height} • {selectedPlayer.weight}
+                      {selectedPlayer.age}y • {selectedPlayer.height} •{" "}
+                      {selectedPlayer.weight}
                     </p>
                   </div>
-                  
+
                   <div className="grid grid-cols-2 gap-4 text-center">
                     <div className="bg-blue-50 p-3 rounded-lg">
-                      <div className="text-2xl font-bold text-blue-600">{selectedPlayer.stats.goals}</div>
+                      <div className="text-2xl font-bold text-blue-600">
+                        {selectedPlayer.stats.goals}
+                      </div>
                       <div className="text-xs text-gray-600">GOALS</div>
                     </div>
                     <div className="bg-green-50 p-3 rounded-lg">
-                      <div className="text-2xl font-bold text-green-600">{selectedPlayer.stats.disposals}</div>
+                      <div className="text-2xl font-bold text-green-600">
+                        {selectedPlayer.stats.disposals}
+                      </div>
                       <div className="text-xs text-gray-600">DISPOSALS</div>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>GOAL ACCURACY</span>
-                      <span className="font-semibold">{selectedPlayer.stats.goalAccuracy}%</span>
+                      <span className="font-semibold">
+                        {selectedPlayer.stats.goalAccuracy}%
+                      </span>
                     </div>
-                    <Progress value={selectedPlayer.stats.goalAccuracy} className="h-2" />
+                    <Progress
+                      value={selectedPlayer.stats.goalAccuracy}
+                      className="h-2"
+                    />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span>EFFICIENCY</span>
-                      <span className="font-semibold">{selectedPlayer.stats.efficiency}%</span>
+                      <span className="font-semibold">
+                        {selectedPlayer.stats.efficiency}%
+                      </span>
                     </div>
-                    <Progress value={selectedPlayer.stats.efficiency} className="h-2" />
+                    <Progress
+                      value={selectedPlayer.stats.efficiency}
+                      className="h-2"
+                    />
                   </div>
                 </div>
               </CardContent>
@@ -599,21 +714,27 @@ export default function PlayerPerformance() {
                     </CardTitle>
                     <div className="flex gap-2">
                       <Button
-                        variant={chartType === "possession" ? "default" : "outline"}
+                        variant={
+                          chartType === "possession" ? "default" : "outline"
+                        }
                         size="sm"
                         onClick={() => setChartType("possession")}
                       >
                         Possession
                       </Button>
                       <Button
-                        variant={chartType === "performance" ? "default" : "outline"}
+                        variant={
+                          chartType === "performance" ? "default" : "outline"
+                        }
                         size="sm"
                         onClick={() => setChartType("performance")}
                       >
                         Performance
                       </Button>
                       <Button
-                        variant={chartType === "comparison" ? "default" : "outline"}
+                        variant={
+                          chartType === "comparison" ? "default" : "outline"
+                        }
                         size="sm"
                         onClick={() => setChartType("comparison")}
                       >
@@ -631,9 +752,9 @@ export default function PlayerPerformance() {
                           <XAxis dataKey="time" />
                           <YAxis />
                           <Tooltip />
-                          <Area 
-                            type="monotone" 
-                            dataKey="possession" 
+                          <Area
+                            type="monotone"
+                            dataKey="possession"
                             stroke={getTeamColor(selectedPlayer.team)}
                             fill={getTeamColor(selectedPlayer.team)}
                             fillOpacity={0.3}
@@ -641,7 +762,7 @@ export default function PlayerPerformance() {
                         </AreaChart>
                       </ResponsiveContainer>
                     )}
-                    
+
                     {chartType === "performance" && (
                       <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={playerMetrics}>
@@ -649,20 +770,23 @@ export default function PlayerPerformance() {
                           <XAxis dataKey="metric" />
                           <YAxis />
                           <Tooltip />
-                          <Bar dataKey="value" fill={getTeamColor(selectedPlayer.team)} />
+                          <Bar
+                            dataKey="value"
+                            fill={getTeamColor(selectedPlayer.team)}
+                          />
                         </BarChart>
                       </ResponsiveContainer>
                     )}
-                    
+
                     {chartType === "comparison" && (
                       <ResponsiveContainer width="100%" height="100%">
                         <RadarChart data={performanceMetrics}>
                           <PolarGrid />
                           <PolarAngleAxis dataKey="name" />
                           <PolarRadiusAxis />
-                          <Radar 
+                          <Radar
                             name={selectedPlayer.name}
-                            dataKey="value" 
+                            dataKey="value"
                             stroke={getTeamColor(selectedPlayer.team)}
                             fill={getTeamColor(selectedPlayer.team)}
                             fillOpacity={0.3}
@@ -687,14 +811,46 @@ export default function PlayerPerformance() {
 
             <TabsContent value="detailed-stats" className="space-y-4">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <StatCard title="Kicks" value={selectedPlayer.stats.kicks} color="blue" />
-                <StatCard title="Handballs" value={selectedPlayer.stats.handballs} color="green" />
-                <StatCard title="Marks" value={selectedPlayer.stats.marks} color="purple" />
-                <StatCard title="Tackles" value={selectedPlayer.stats.tackles} color="red" />
-                <StatCard title="Contested" value={selectedPlayer.stats.contested} color="orange" />
-                <StatCard title="Uncontested" value={selectedPlayer.stats.uncontested} color="yellow" />
-                <StatCard title="Inside 50s" value={selectedPlayer.stats.inside50s} color="pink" />
-                <StatCard title="Clangers" value={selectedPlayer.stats.clangers} color="gray" />
+                <StatCard
+                  title="Kicks"
+                  value={selectedPlayer.stats.kicks}
+                  color="blue"
+                />
+                <StatCard
+                  title="Handballs"
+                  value={selectedPlayer.stats.handballs}
+                  color="green"
+                />
+                <StatCard
+                  title="Marks"
+                  value={selectedPlayer.stats.marks}
+                  color="purple"
+                />
+                <StatCard
+                  title="Tackles"
+                  value={selectedPlayer.stats.tackles}
+                  color="red"
+                />
+                <StatCard
+                  title="Contested"
+                  value={selectedPlayer.stats.contested}
+                  color="orange"
+                />
+                <StatCard
+                  title="Uncontested"
+                  value={selectedPlayer.stats.uncontested}
+                  color="yellow"
+                />
+                <StatCard
+                  title="Inside 50s"
+                  value={selectedPlayer.stats.inside50s}
+                  color="pink"
+                />
+                <StatCard
+                  title="Clangers"
+                  value={selectedPlayer.stats.clangers}
+                  color="gray"
+                />
               </div>
             </TabsContent>
 
@@ -718,18 +874,30 @@ export default function PlayerPerformance() {
                         >
                           {score}
                         </div>
-                        <div className="text-xs text-gray-500 mt-1">R{10 - index}</div>
+                        <div className="text-xs text-gray-500 mt-1">
+                          R{10 - index}
+                        </div>
                       </div>
                     ))}
                   </div>
                   <div className="h-64">
                     <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={selectedPlayer.form.map((score, index) => ({ round: `R${10 - index}`, score }))}>
+                      <LineChart
+                        data={selectedPlayer.form.map((score, index) => ({
+                          round: `R${10 - index}`,
+                          score,
+                        }))}
+                      >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="round" />
                         <YAxis domain={[60, 100]} />
                         <Tooltip />
-                        <Line type="monotone" dataKey="score" stroke={getTeamColor(selectedPlayer.team)} strokeWidth={2} />
+                        <Line
+                          type="monotone"
+                          dataKey="score"
+                          stroke={getTeamColor(selectedPlayer.team)}
+                          strokeWidth={2}
+                        />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
@@ -748,16 +916,29 @@ export default function PlayerPerformance() {
                       <div key={index} className="space-y-2">
                         <div className="flex justify-between text-sm font-medium">
                           <span>{zone.zone}</span>
-                          <span>{zone.touches} touches • {zone.effectiveness}% effective</span>
+                          <span>
+                            {zone.touches} touches • {zone.effectiveness}%
+                            effective
+                          </span>
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                           <div>
-                            <div className="text-xs text-gray-500 mb-1">Touches</div>
-                            <Progress value={(zone.touches / 30) * 100} className="h-3" />
+                            <div className="text-xs text-gray-500 mb-1">
+                              Touches
+                            </div>
+                            <Progress
+                              value={(zone.touches / 30) * 100}
+                              className="h-3"
+                            />
                           </div>
                           <div>
-                            <div className="text-xs text-gray-500 mb-1">Effectiveness</div>
-                            <Progress value={zone.effectiveness} className="h-3" />
+                            <div className="text-xs text-gray-500 mb-1">
+                              Effectiveness
+                            </div>
+                            <Progress
+                              value={zone.effectiveness}
+                              className="h-3"
+                            />
                           </div>
                         </div>
                       </div>
