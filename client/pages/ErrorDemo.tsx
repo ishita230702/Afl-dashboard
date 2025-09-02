@@ -94,7 +94,7 @@ export default function ErrorDemo() {
         return <ForbiddenError onRetry={() => setCurrentDemo(null)} />;
       case "general":
         return (
-          <Error
+          <ErrorPage
             title="General Error Demo"
             message="This is a demonstration of a general error page."
             onRetry={() => setCurrentDemo(null)}
