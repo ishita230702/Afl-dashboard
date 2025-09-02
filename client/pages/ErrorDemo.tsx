@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import MobileNavigation from "@/components/MobileNavigation";
-import Error, {
+import ErrorPage, {
   NetworkError,
   ServerError,
   UnauthorizedError,
